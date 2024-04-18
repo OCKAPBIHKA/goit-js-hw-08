@@ -2,7 +2,7 @@
 const images = [
   {
     preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__340.jpg',
+      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
     original:
       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
     description: 'Hokkaido Flower',
@@ -65,32 +65,33 @@ const images = [
   },
 ];
 //// Додавання елементів HTML
-const galleryList = document.querySelector('.gallery');
+const galleryPicture = document.querySelector('ul.gallery');
 
-images.forEach(image => {
-  const galleryItem = document.createElement('li');
-  galleryItem.classList.add('gallery-item');
-  const galleryLink = document.createElement('a');
-  galleryLink.classList.add('gallery-link');
+const galleryEdd = images
+  .map(
+    image => `<li class="gallery-item">
+  <a class="gallery-link" href="${image.original}">
+    <img
+      class="gallery-image"
+      src="${image.preview}"
+      data-source="${image.original}"
+      alt="${image.description}"
+    />
+  </a>
+</li>`
+  )
+  .join('');
 
-  ////// Заборона завантаження файлу img
-  galleryLink.href = '#';
+galleryPicture.insertAdjacentHTML('afterbegin', galleryEdd);
 
-  ////// створення img з атрибутами та їх інтеграція в HTML
-  const galleryImage = document.createElement('img');
-  galleryImage.classList.add('gallery-image');
-  galleryImage.src = image.preview;
-  galleryImage.alt = image.description;
-  galleryImage.dataset.source = image.original;
-  galleryLink.appendChild(galleryImage);
-  galleryItem.appendChild(galleryLink);
-  galleryList.appendChild(galleryItem);
-});
+galleryPicture.addEventListener('click', event => {
+  if (event.target !== event.currentTarget) {
+    event.preventDefault();
+    const bigImg = event.target.dataset.source;
 
-///// посилання на велике зображення події при click
-galleryList.addEventListener('click', event => {
-  if (event.target.classList.contains('gallery-image')) {
-    const imageSource = event.target.dataset.source;
-    console.log(`bigImg: ${imageSource}`);
+    const instance = basicLightbox.create(`
+    <img src="${bigImg}" width="800" height="600">
+`);
+    instance.show();
   }
 });

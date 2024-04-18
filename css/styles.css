@@ -3,12 +3,16 @@
 }
 
 body {
-  margin: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #fafafa;
-  color: #212121;
+  display: flex;
+  justify-content: center;
 }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 
 .gallery-item {
   list-style-type: none;
@@ -17,18 +21,18 @@ body {
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
+  width: 1128px;
   gap: 24px;
 }
 
 .gallery-image {
   width: 340px;
   height: auto;
+  transition: transform 0.3s ease-in-out;
+  border: 2px solid #595353;
 }
 
-
-.gallery-item :hover {
+.gallery-image:hover {
+  transform: scale(1.07);
   cursor: pointer;
 }
